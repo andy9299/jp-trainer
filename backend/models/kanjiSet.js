@@ -136,6 +136,22 @@ class KanjiSet {
       [char, id]);
     return updateRes.rows[0];
   }
+
+  /** Delete given user from database;
+   * Returns undefined. */
+
+  static async remove(id) {
+    let result = await db.query(
+      `DELETE
+           FROM kanji_sets
+           WHERE id = $1
+           RETURNING id`,
+      [id],
+    );
+    const set = result.rows[0];
+
+    if (!set) throw new NotFoundError(`No kanjiset with id: ${id}`);
+  }
 }
 
 module.exports = KanjiSet;

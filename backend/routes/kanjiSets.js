@@ -9,6 +9,7 @@ const KanjiSet = require("../models/kanjiSet");
 const { BadRequestError } = require("../expressError");
 const newKanjiSetNameSchema = require("../schemas/newKanjiSetName.json");
 const singleCharacterSchema = require("../schemas/singleCharacter.json");
+const { ensureCorrectUser } = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -33,7 +34,7 @@ router.get("/id/:id", async function (req, res, next) {
  *
  **/
 
-router.get("/user/:username", async function (req, res, next) {
+router.get("/user/:username", ensureCorrectUser, async function (req, res, next) {
   try {
     const kanjiSets = await KanjiSet.getByUsername(req.params.username);
     return res.json({ kanjiSets });
@@ -42,7 +43,7 @@ router.get("/user/:username", async function (req, res, next) {
   }
 });
 
-/** POST / {username} => { kanji_set }
+/** POST / {username, kanjiSetName} => { kanji_set }
  *
  * Returns { id, name, username}
  *
@@ -66,7 +67,7 @@ router.post("/", async function (req, res, next) {
  *
  * Returns { id, name, characters}
  *
- * Authorization required: same user as set creator
+ * Authorization required: same user as set creator (checks in model)
  **/
 
 router.patch("/id/:id/insert", async function (req, res, next) {
@@ -87,10 +88,10 @@ router.patch("/id/:id/insert", async function (req, res, next) {
  *
  * Returns { id, name, characters}
  *
- * Authorization required: same user as set creator
+ * Authorization required: same user as set creator (checks in model)
  **/
 
-router.patch("/id/:id/remove", async function (req, res, next) {
+router.patch("/id/:id/removechar", async function (req, res, next) {
   try {
     const validator = jsonschema.validate(req.body, singleCharacterSchema);
     if (!validator.valid) {
@@ -103,6 +104,23 @@ router.patch("/id/:id/remove", async function (req, res, next) {
     return next(err);
   }
 });
+
+/** DELETE /id/[id]  => { deleted: id }
+ *
+ * Returns { id, name, characters}
+ *
+ * Authorization required: same user as set creator (checks in model)
+ **/
+
+router.delete("/id/:id/removeset", async function (req, res, next) {
+  try {
+    await KanjiSet.remove(req.params.id);
+    return res.json({ deleted: req.params.id });
+  } catch (err) {
+    return next(err);
+  }
+});
+
 
 module.exports = router;
 
