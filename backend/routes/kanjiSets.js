@@ -112,7 +112,7 @@ router.patch("/id/:id/removechar", async function (req, res, next) {
  * Authorization required: same user as set creator (checks in model)
  **/
 
-router.delete("/id/:id/removeset", async function (req, res, next) {
+router.delete("/id/:id/", async function (req, res, next) {
   try {
     await KanjiSet.remove(req.params.id, res.locals.user.username);
     return res.json({ deleted: req.params.id });
