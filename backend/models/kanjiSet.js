@@ -140,7 +140,11 @@ class KanjiSet {
   /** Delete given user from database;
    * Returns undefined. */
 
-  static async remove(id) {
+  static async remove(id, username) {
+    const found = await db.query("SELECT username, characters FROM kanji_sets WHERE id = $1", [id]);
+    if (found.rows[0].username !== username) {
+      throw new UnauthorizedError("Not Authorized");
+    }
     let result = await db.query(
       `DELETE
            FROM kanji_sets
