@@ -62,14 +62,14 @@ router.post("/", async function (req, res, next) {
   }
 });
 
-/** PATCH /[id]/insert {id, char, username} => {kanji_set}
+/** PATCH /id/[id]/insert {id, char, username} => {kanji_set}
  *
  * Returns { id, name, characters}
  *
  * Authorization required: same user as set creator
  **/
 
-router.patch("/:id/insert", async function (req, res, next) {
+router.patch("/id/:id/insert", async function (req, res, next) {
   try {
     const validator = jsonschema.validate(req.body, singleCharacterSchema);
     if (!validator.valid) {
@@ -77,6 +77,27 @@ router.patch("/:id/insert", async function (req, res, next) {
       throw new BadRequestError(errs);
     }
     const kanjiSet = await KanjiSet.insertChar(req.params.id, req.body.character, res.locals.user.username);
+    return res.json({ kanjiSet });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+/** PATCH /id/[id]/insert {id, char, username} => {kanji_set}
+ *
+ * Returns { id, name, characters}
+ *
+ * Authorization required: same user as set creator
+ **/
+
+router.patch("/id/:id/remove", async function (req, res, next) {
+  try {
+    const validator = jsonschema.validate(req.body, singleCharacterSchema);
+    if (!validator.valid) {
+      const errs = validator.errors.map(e => e.stack);
+      throw new BadRequestError(errs);
+    }
+    const kanjiSet = await KanjiSet.deleteChar(req.params.id, req.body.character, res.locals.user.username);
     return res.json({ kanjiSet });
   } catch (err) {
     return next(err);
