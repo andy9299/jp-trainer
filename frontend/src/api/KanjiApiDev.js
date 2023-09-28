@@ -1,5 +1,3 @@
-"use strict";
-
 import axios from "axios";
 
 // Online API from https://kanjiapi.dev/#!/

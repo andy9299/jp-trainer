@@ -1,13 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
-// import './App.css';
+
+
+
+import { BrowserRouter } from 'react-router-dom';
+import AppRoutes from './AppRoutes';
+import AppNavBar from './nav/AppNavBar';
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-    </div>
+    <BrowserRouter>
+      <AppNavBar />
+      <AppRoutes />
+    </BrowserRouter>
   );
 }
 
