@@ -93,17 +93,32 @@ class User {
    */
 
   static async update(username, data) {
-    if (!data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
-      throw new BadRequestError("Invalid Update Data");
+
+    // try to find the user first
+    const resultUser = await db.query(
+      `SELECT username,
+                  password,
+                  email
+           FROM users
+           WHERE username = $1`, [username]
+    );
+
+    const checkUser = resultUser.rows[0];
+    if (!checkUser) throw new UnauthorizedError("Invalid username");
+
+    const isValid = await bcrypt.compare(data.oldPassword, checkUser.password);
+    if (isValid === false) {
+      throw new UnauthorizedError("Invalid Old Password");
     }
-    data.password = await bcrypt.hash(data.password, BCRYPT_WORK_FACTOR);
+
+    data.newPassword = await bcrypt.hash(data.newPassword, BCRYPT_WORK_FACTOR);
 
     const result = await db.query(
       `UPDATE users
            SET email = $1, password = $2
            WHERE username = $3
            RETURNING username, email`,
-      [data.email, data.password, username]
+      [data.email, data.newPassword, username]
     );
     const user = result.rows[0];
 

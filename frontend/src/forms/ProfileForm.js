@@ -12,7 +12,8 @@ function ProfileForm() {
   const history = useNavigate();
   const [formData, handleChange] = useFields({
     email: currentUser.email,
-    password: ""
+    newPassword: "",
+    oldPassword: ""
   });
   const [errors, setErrors] = useState(null);
   const handleSubmit = async e => {
@@ -51,10 +52,17 @@ function ProfileForm() {
           <Input
             className="mb-2"
             type="password"
-            name="password"
-            value={formData.password}
+            name="newPassword"
+            value={formData.newPassword}
             onChange={handleChange}
-            placeholder='Password' />
+            placeholder='New Password' />
+          <Input
+            className="mb-2"
+            type="password"
+            name="oldPassword"
+            value={formData.oldPassword}
+            onChange={handleChange}
+            placeholder='Old Password' />
           <Button>Edit Profile</Button>
         </div>
         {errors ? <ErrorMessages errors={errors} /> : null}
