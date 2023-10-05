@@ -213,7 +213,7 @@ function TrainerHome() {
               color="dark"
               onClick={toggleKanaTables}
             >
-              Show/Hide Kana Tables
+              Show/Hide Kana Options
             </Button>
             {displayTables ?
               (
@@ -242,7 +242,7 @@ function TrainerHome() {
           window.location.href = "/trainer";
         }}
       >
-        Go Back
+        Go Back to Menu
       </Button>
     </>
 

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Home from "./home/Home";
-import { Route, Routes, Navigate, Outlet } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import TrainerHome from "./trainer/TrainerHome";
 import SearchResults from "./search/SearchResults";
 import UserContext from "./context/UserContext";

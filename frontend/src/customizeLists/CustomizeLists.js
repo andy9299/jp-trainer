@@ -8,6 +8,7 @@ import ErrorMessages from "../common/ErrorMessages";
 import useFields from "../hooks/useFields";
 import './CustomizeLists.css';
 
+
 function CustomizeLists() {
   const { currentUser } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -19,23 +20,23 @@ function CustomizeLists() {
     kanji: "",
     newName: ""
   });
+  const getKanjiSets = async () => {
+    try {
+      let sets = await JpTrainerApi.getUserKanjiSets(currentUser.username);
+      setUserKanjiSets(
+        sets.kanjiSets
+      );
+    }
+    catch (err) {
+      alert("Error Loading User's KanjiSet s");
+    }
+  };
   useEffect(() => {
     setIsLoading(true);
     setErrors(null);
-    async function getKanjiSets() {
-      try {
-        let sets = await JpTrainerApi.getUserKanjiSets(currentUser.username);
-        setUserKanjiSets(
-          sets.kanjiSets
-        );
-      }
-      catch (err) {
-        alert("Error Loading User's Kanji Sets");
-      }
-    }
     getKanjiSets();
     setIsLoading(false);
-  }, [chosenSet, userKanjiSets]);
+  }, [chosenSet]);
 
   const onSelectSet = async (e) => {
     setIsLoading(true);
@@ -61,14 +62,15 @@ function CustomizeLists() {
       setErrors(err);
     }
     setIsLoading(false);
-
   };
 
   const onAddSet = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    resetForm();
     try {
       await JpTrainerApi.createKanjiSet(formData.newName);
+      getKanjiSets();
     }
     catch (err) {
       setErrors(err);
@@ -187,8 +189,8 @@ function CustomizeLists() {
                     value={formData.kanji}
                     onChange={handleChange}
                     placeholder="Kanji" />
-
                   <Button>Add Kanji</Button>
+                  {errors ? <ErrorMessages errors={errors} /> : null}
                 </div>
               </form>
               {errors ? <div className="ml-2"><ErrorMessages errors={errors} /></div> : null}
@@ -214,7 +216,7 @@ function CustomizeLists() {
         color="dark"
         onClick={reset}
       >
-        Go Back
+        Go Back to Menu
       </Button>
     </>
   );

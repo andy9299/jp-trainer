@@ -4,8 +4,10 @@ import { Button, Input } from "reactstrap";
 import UserContext from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import ErrorMessages from "../common/ErrorMessages";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 function ProfileForm() {
+  const [isLoading, setIsLoading] = useState(false);
   const { editProfile, currentUser } = useContext(UserContext);
   const history = useNavigate();
   const [formData, handleChange] = useFields({
@@ -14,15 +16,20 @@ function ProfileForm() {
   });
   const [errors, setErrors] = useState(null);
   const handleSubmit = async e => {
+    e.preventDefault();
+    setIsLoading(true);
     try {
-      e.preventDefault();
       await editProfile(formData);
       history('/');
     }
     catch (err) {
       setErrors(err);
     }
+    setIsLoading(false);
   };
+
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <div className="vh-nav d-flex justify-content-center align-items-center" >
       <form className="w40vw" onSubmit={handleSubmit}>

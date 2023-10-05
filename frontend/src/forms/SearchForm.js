@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import useFields from "../hooks/useFields";
 import { Button, Input } from "reactstrap";
-
+import LoadingSpinner from "../common/LoadingSpinner";
 
 function SearchForm({ search }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, handleChange, resetForm] = useFields({
     searchQuery: "",
     searchType: "kanji"
   });
   const handleSubmit = e => {
     e.preventDefault();
+    setIsLoading(true);
     search(formData.searchQuery, formData.searchType);
     resetForm();
+    setIsLoading(false);
   };
+
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="d-flex justify-content-center">
