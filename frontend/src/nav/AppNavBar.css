@@ -1,22 +1,14 @@
-nav {
-  background-color: rgb(96, 104, 108);
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-    0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+a {
+  color: rgb(138, 138, 138) !important;
+  text-decoration: none !important;
 }
 
-nav a {
-  color: darkgray;
-  text-decoration: none;
-  font-size: 0.9rem;
+a.active {
+  color: white !important;
 }
 
-nav a.active:not(.navbar-brand) {
-  color: rgb(232, 230, 227);
-  font-weight: bold;
-  font-size: 0.9rem;
-}
-
-a.navbar-brand {
-  padding: 0;
-  color: white;
+.navbar {
+  background-color: rgb(39, 39, 39);
+  height: 60px;
+  border-bottom: 1px solid rgb(168, 168, 168);
 }

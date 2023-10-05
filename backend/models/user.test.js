@@ -127,17 +127,7 @@ describe("get", function () {
     let getRes = await User.get("testuser2");
     expect(getRes).toEqual({
       username: "testuser2",
-      email: "test2@testemail.com",
-      kanjiSets: [
-        {
-          "id": testSetIds[0],
-          "name": "set1"
-        },
-        {
-          "id": testSetIds[1],
-          "name": "set2"
-        }
-      ]
+      email: "test2@testemail.com"
     });
   });
   test("NotFoundError on invalid user", async function () {

@@ -1,25 +1,75 @@
-import React from "react";
-import { Nav, NavItem, Navbar } from "reactstrap";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { Navbar, Nav, NavItem } from "reactstrap";
 import "./AppNavBar.css";
+import UserContext from "../context/UserContext";
+
 function AppNavBar() {
 
+  const { currentUser, logout } = useContext(UserContext);
   return (
-    <Navbar expand="md" >
-      <NavLink end to="/" className="navbar-brand">
-        JP Trainer
-      </NavLink>
+    <Navbar className="navbar-expand-md">
+      <Nav >
+        <NavItem className="m-3">
+          <NavLink to='/' end>
+            Home
+          </NavLink>
+        </NavItem>
+        <NavItem className="m-3">
+          <NavLink
+            to='/search'
+          >
+            Search
+          </NavLink>
+        </NavItem>
+        <NavItem className="m-3">
+          <NavLink
+            to='/trainer'
+          >
+            Train
+          </NavLink>
+        </NavItem>
+        {currentUser ?
+          <NavItem className="m-3">
+            <NavLink
+              to='/customize'
+            >
+              Customize
+            </NavLink>
+          </NavItem>
+          :
+          ""
+        }
+      </Nav>
       <Nav className="ml-auto">
-        <NavItem >
-          <NavLink to="/login" className="me-2">
-            Login
-          </NavLink>
-        </NavItem>
-        <NavItem >
-          <NavLink to="/register" className="me-2">
-            Register
-          </NavLink>
-        </NavItem>
+        {currentUser ?
+          <>
+            <NavItem className="m-3">
+              <NavLink to='/profile' >
+                {currentUser.username}
+              </NavLink>
+            </NavItem>
+            <NavItem className="m-3">
+              <NavLink onClick={logout} >
+                Logout
+              </NavLink>
+            </NavItem>
+          </>
+          :
+          <>
+            <NavItem className="m-3">
+              <NavLink to='/register' >
+                Register
+              </NavLink>
+            </NavItem>
+            <NavItem className="m-3">
+              <NavLink to='/login' >
+                Login
+              </NavLink>
+            </NavItem>
+          </>
+        }
+
       </Nav>
     </Navbar>
   );

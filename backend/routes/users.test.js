@@ -31,17 +31,7 @@ describe("GET /users/:username", function () {
     expect(resp.body).toEqual({
       user: {
         username: "testuser1",
-        email: "test1@testemail.com",
-        kanjiSets: [
-          {
-            id: testSetIds[0],
-            name: "set1"
-          },
-          {
-            id: testSetIds[1],
-            name: "set2"
-          }
-        ]
+        email: "test1@testemail.com"
       },
     });
   });

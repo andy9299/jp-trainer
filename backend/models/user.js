@@ -114,8 +114,7 @@ class User {
 
   /** Given a username, return data about user.
    *
-   * Returns { username, email, kanjiSets }
-   *   where kanjiSets is an array of {id, setname}
+   * Returns { username, email }
    *
    * Throws NotFoundError if user not found.
    **/
@@ -133,12 +132,6 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
-    const userKanjiSetRes = await db.query(
-      `SELECT id, name
-           FROM kanji_sets
-           WHERE username = $1
-           ORDER BY name ASC`, [username]);
-    user.kanjiSets = userKanjiSetRes.rows;
     return user;
   }
 

@@ -35,9 +35,9 @@ function SearchForm({ search }) {
             name="searchQuery"
             value={formData.searchQuery}
             onChange={handleChange}
-            placeholder="Search" />
+            placeholder="Search A Kanji Character" />
           <div className="input-group-append">
-            <Button color="secondary">Search</Button>
+            <Button color="success">Search</Button>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardBody, Container, Row, Col } from "reactstrap";
+import './KanjiDetails.css';
 
 function KanjiDetails({ data }) {
   const {
@@ -16,12 +17,14 @@ function KanjiDetails({ data }) {
   } = data;
 
   return (
-    <Card className="m-2">
+    <Card className="m-2  bg-dark text-white">
       <CardBody>
         <Container>
           <Row className="align-items-center text-center">
             <Col xs="auto" style={{ fontSize: "500%" }}>
-              {kanji}
+              <p>
+                {kanji}
+              </p>
             </Col>
             <Col >
               {meanings.map((meaning, index) => (

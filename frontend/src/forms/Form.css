@@ -2,6 +2,6 @@
   height: calc(100vh - 60px)
 }
 
-.kanji {
-  font-size: 1000% !important;
+.w40vw {
+  width: 40vw
 }

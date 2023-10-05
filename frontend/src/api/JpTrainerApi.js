@@ -24,7 +24,6 @@ class JpTrainerApi {
   }
 
   // auth routes
-
   static async getToken(loginInfo) {
     let res = await this.request(`auth/token`, loginInfo, "post");
     return res;

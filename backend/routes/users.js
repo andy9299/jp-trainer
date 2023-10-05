@@ -14,8 +14,7 @@ const router = express.Router();
 
 /** GET /[username] => { user }
  *
- * Returns { username, email, kanjiSets}
- *   where kanjiSets is {{id, name}, {id, name}, ...}
+ * Returns { username, email }
  *
  * Authorization required: same user-as-:username
  **/

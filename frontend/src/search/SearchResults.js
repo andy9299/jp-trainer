@@ -4,9 +4,9 @@ import ErrorMessages from "../common/ErrorMessages";
 import KanjiApiDev from "../api/KanjiApiDev";
 import LoadingSpinner from "../common/LoadingSpinner";
 import SearchForm from "../forms/SearchForm";
-import KanjiDetails from "./KanjiDetails";
+import KanjiDetails from "../details/KanjiDetails";
 
-function ResultsList() {
+function SearchResults() {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState(null);
@@ -27,7 +27,6 @@ function ResultsList() {
       setErrors(err);
     }
     finally {
-      console.log(dataArray);
       setIsLoading(false);
     }
   };
@@ -43,7 +42,7 @@ function ResultsList() {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div>
+    <div className="m-3">
       <SearchForm search={search} />
       {errors ? <ErrorMessages errors={errors} /> : ""}
       {dataArray.length ?
@@ -62,4 +61,4 @@ function ResultsList() {
   );
 }
 
-export default ResultsList;
+export default SearchResults;

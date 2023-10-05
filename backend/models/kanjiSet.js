@@ -99,8 +99,8 @@ class KanjiSet {
     if (found.rows[0].username !== username) {
       throw new UnauthorizedError("Not Authorized");
     }
-    if (found.rows[0].characters.length >= 500) {
-      throw new BadRequestError("Max Set Size is 500");
+    if (found.rows[0].characters.length >= 200) {
+      throw new BadRequestError("Max Set Size is 200");
     }
     if (found.rows[0].characters.includes(char)) {
       throw new BadRequestError("Set Must Be Unique Characters");
@@ -137,7 +137,7 @@ class KanjiSet {
     return updateRes.rows[0];
   }
 
-  /** Delete given user from database;
+  /** Delete kanji set by id;
    * Returns undefined. */
 
   static async remove(id, username) {
