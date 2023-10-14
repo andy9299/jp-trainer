@@ -111,14 +111,6 @@ function CustomizeLists() {
     setIsLoading(false);
   };
 
-  const reset = () => {
-    setErrors(null);
-    setIsLoading(true);
-    setChosenSet(null);
-    setUserKanjiSets(null);
-    resetForm();
-  };
-
   if (isLoading) return <LoadingSpinner />;
 
   return (
@@ -211,13 +203,6 @@ function CustomizeLists() {
           :
           ""
       }
-      <Button
-        className="fixed-bottom"
-        color="dark"
-        onClick={reset}
-      >
-        Go Back to Menu
-      </Button>
     </>
   );
 }

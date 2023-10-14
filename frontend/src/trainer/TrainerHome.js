@@ -235,15 +235,6 @@ function TrainerHome() {
       </div>
       <div>
       </div>
-      <Button
-        className="fixed-bottom"
-        color="dark"
-        onClick={() => {
-          window.location.href = "/trainer";
-        }}
-      >
-        Go Back to Menu
-      </Button>
     </>
 
 

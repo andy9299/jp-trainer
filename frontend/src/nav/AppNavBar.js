@@ -16,14 +16,14 @@ function AppNavBar() {
           </NavLink>
         </NavItem>
         <NavItem className="m-3">
-          <NavLink
+          <NavLink reloadDocument
             to='/search'
           >
             Search
           </NavLink>
         </NavItem>
         <NavItem className="m-3">
-          <NavLink
+          <NavLink reloadDocument
             to='/trainer'
           >
             Train
@@ -31,7 +31,7 @@ function AppNavBar() {
         </NavItem>
         {currentUser ?
           <NavItem className="m-3">
-            <NavLink
+            <NavLink reloadDocument
               to='/customize'
             >
               Customize
