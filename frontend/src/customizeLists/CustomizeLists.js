@@ -85,6 +85,7 @@ function CustomizeLists() {
   const onAddKanji = async e => {
     e.preventDefault();
     setIsLoading(true);
+    setErrors(null);
     resetForm();
     try {
       await KanjiApiDev.kanjiChar(formData.kanji);
@@ -101,6 +102,7 @@ function CustomizeLists() {
 
   const removeKanji = async (e) => {
     setIsLoading(true);
+    setErrors(null);
     try {
       let removeValue = e.target.value;
       await JpTrainerApi.removeKanji(chosenSetId, removeValue);
@@ -164,11 +166,9 @@ function CustomizeLists() {
                 <Button>Add Set</Button>
               </div>
             </form>
-            {errors ? <div className="ml-2"><ErrorMessages errors={errors} /></div> : null}
           </div>
 
         </>
-
         :
         ""
       }
@@ -186,7 +186,6 @@ function CustomizeLists() {
                     onChange={handleChange}
                     placeholder="Kanji" />
                   <Button>Add Kanji</Button>
-                  {errors ? <ErrorMessages errors={errors} /> : null}
                 </div>
               </form>
               {errors ? <div className="ml-2"><ErrorMessages errors={errors} /></div> : null}
@@ -207,6 +206,7 @@ function CustomizeLists() {
           :
           ""
       }
+
     </>
   );
 }
