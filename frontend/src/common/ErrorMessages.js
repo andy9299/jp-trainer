@@ -3,7 +3,7 @@ import { Alert } from "reactstrap";
 
 const ErrorMessages = ({ errors }) => {
   return ((Array.isArray(errors)) ?
-    errors.map(err => <Alert className="" color="danger">
+    errors.map((err, idx) => <Alert className="" color="danger" key={idx}>
       An error has occurred {err.message ? `: ${err.message}` : `: ${err}`}
     </Alert>)
     : <Alert color="danger" className="">

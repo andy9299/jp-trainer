@@ -25,8 +25,8 @@ function LoginForm() {
     }
     catch (err) {
       setErrors(err);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   if (isLoading) return <LoadingSpinner />;
