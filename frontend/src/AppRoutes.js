@@ -23,11 +23,7 @@ function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/search" element={<SearchResults />} />
       <Route path="/trainer" element={<TrainerHome />} />
-      <Route path="/customize" element={
-        <ProtectedRoute>
-          <CustomizeLists />
-        </ProtectedRoute>
-      } />
+      <Route path="/customize" element={<CustomizeLists />} />
       <Route path="/profile" element={
         <ProtectedRoute>
           <ProfileForm />

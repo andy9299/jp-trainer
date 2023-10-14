@@ -20,6 +20,16 @@ function CustomizeLists() {
     kanji: "",
     newName: ""
   });
+
+  useEffect(() => {
+    setIsLoading(true);
+    setErrors(null);
+    if (currentUser) {
+      getKanjiSets();
+    };
+    setIsLoading(false);
+  }, [currentUser]);
+
   const getKanjiSets = async () => {
     try {
       let sets = await JpTrainerApi.getUserKanjiSets(currentUser.username);
@@ -28,15 +38,9 @@ function CustomizeLists() {
       );
     }
     catch (err) {
-      alert("Error Loading User's KanjiSet s");
+      alert("Error Loading User's KanjiSets");
     }
   };
-  useEffect(() => {
-    setIsLoading(true);
-    setErrors(null);
-    getKanjiSets();
-    setIsLoading(false);
-  }, [chosenSet]);
 
   const onSelectSet = async (e) => {
     setIsLoading(true);
