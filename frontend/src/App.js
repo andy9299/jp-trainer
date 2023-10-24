@@ -22,6 +22,7 @@ function App() {
         catch (err) {
           alert("Error loading user");
           setCurrentUser(null);
+          setToken(null);
           redirect('/');
         }
       }
