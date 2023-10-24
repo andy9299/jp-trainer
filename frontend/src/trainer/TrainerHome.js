@@ -101,7 +101,7 @@ function TrainerHome() {
     }
     else {
       checkedCols.delete(+e.target.value);
-      await setCheckedCols(new Set(checkedCols));
+      setCheckedCols(new Set(checkedCols));
     }
   };
 
