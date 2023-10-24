@@ -32,6 +32,7 @@ function CustomizeLists() {
 
   const getKanjiSets = async () => {
     try {
+      setIsLoading(true);
       let sets = await JpTrainerApi.getUserKanjiSets(currentUser.username);
       setUserKanjiSets(
         sets.kanjiSets
@@ -40,11 +41,14 @@ function CustomizeLists() {
     catch (err) {
       alert("Error Loading User's KanjiSets");
     }
+    finally {
+      setIsLoading(false);
+    }
   };
 
   const onSelectSet = async (e) => {
-    setIsLoading(true);
     try {
+      setIsLoading(true);
       setChosenSetId(+e.target.value);
       let set = await JpTrainerApi.getKanjiSet(+e.target.value);
       setChosenSet(set.kanjiSet);
@@ -52,12 +56,14 @@ function CustomizeLists() {
     catch (err) {
       setErrors(err);
     }
-    setIsLoading(false);
+    finally {
+      setIsLoading(false);
+    }
   };
 
   const onDeleteSet = async (e) => {
-    setIsLoading(true);
     try {
+      setIsLoading(true);
       let deleteId = +e.target.value;
       await JpTrainerApi.deleteSet(deleteId);
       setUserKanjiSets([...(userKanjiSets.filter(set => set.id !== deleteId))]);
@@ -65,29 +71,33 @@ function CustomizeLists() {
     catch (err) {
       setErrors(err);
     }
-    setIsLoading(false);
+    finally {
+      setIsLoading(false);
+    }
   };
 
   const onAddSet = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     resetForm();
     try {
+      setIsLoading(true);
       await JpTrainerApi.createKanjiSet(formData.newName);
       getKanjiSets();
     }
     catch (err) {
       setErrors(err);
     }
-    setIsLoading(false);
+    finally {
+      setIsLoading(false);
+    }
   };
 
   const onAddKanji = async e => {
     e.preventDefault();
-    setIsLoading(true);
     setErrors(null);
     resetForm();
     try {
+      setIsLoading(true);
       await KanjiApiDev.kanjiChar(formData.kanji);
       await JpTrainerApi.insertKanji(chosenSetId, formData.kanji);
       // changed here instead of requesting again since response is slow
@@ -97,13 +107,16 @@ function CustomizeLists() {
     catch (err) {
       setErrors(err);
     }
+    finally {
+      setIsLoading(false);
+    }
     setIsLoading(false);
   };
 
   const removeKanji = async (e) => {
-    setIsLoading(true);
     setErrors(null);
     try {
+      setIsLoading(true);
       let removeValue = e.target.value;
       await JpTrainerApi.removeKanji(chosenSetId, removeValue);
       setChosenSet({
@@ -114,7 +127,9 @@ function CustomizeLists() {
     catch (err) {
       setErrors(err);
     }
-    setIsLoading(false);
+    finally {
+      setIsLoading(false);
+    }
   };
 
   if (isLoading) return <LoadingSpinner />;

@@ -29,9 +29,9 @@ function TrainerHome() {
 
   // Sets ansObj to: {key: [ans1, ans2, ...], ...}
   const reqAnsObjByKanji = async (kanjiList) => {
-    setIsLoading(true);
     let answers = {};
     try {
+      setIsLoading(true);
       await Promise.all(kanjiList.map(async (kanji) => {
         const kanjiData = await KanjiApiDev.kanjiChar(kanji);
         answers[kanji] = kanjiData.meanings;
@@ -48,7 +48,6 @@ function TrainerHome() {
   };
   // Kana === Hiragana && Katakana
   const loadKana = async () => {
-    console.log(userKanjiSets);
     setIsLoading(true);
     setType("kana");
     let kanaArray = [];
@@ -61,11 +60,11 @@ function TrainerHome() {
   };
 
   const loadByGrade = async (e) => {
-    setIsLoading(true);
-    setType("kanji");
     try {
+      setIsLoading(true);
       const kanjiList = await KanjiApiDev.kanjiGrade(e.target.value);
       await reqAnsObjByKanji(kanjiList);
+      setType("kanji");
     }
     catch (err) {
       setErrors(err);
@@ -76,11 +75,11 @@ function TrainerHome() {
   };
 
   const loadByKanjiSet = async (e) => {
-    setIsLoading(true);
-    setType("kanji");
     try {
+      setIsLoading(true);
       const kanjiList = userKanjiSets.find(set => set.id === +e.target.value).characters;
       await reqAnsObjByKanji(kanjiList);
+      setType("kanji");
     }
     catch (err) {
       setErrors(err);
@@ -101,7 +100,7 @@ function TrainerHome() {
     }
     else {
       checkedCols.delete(+e.target.value);
-      setCheckedCols(new Set(checkedCols));
+      await setCheckedCols(new Set(checkedCols));
     }
   };
 
@@ -119,10 +118,11 @@ function TrainerHome() {
   }, [checkedCols]);
 
   useEffect(() => {
-    setIsLoading(true);
+
     if (currentUser) {
       async function getKanjiSets() {
         try {
+          setIsLoading(true);
           let sets = await JpTrainerApi.getUserKanjiSets(currentUser.username);
           setUserKanjiSets(
             sets.kanjiSets
@@ -131,10 +131,12 @@ function TrainerHome() {
         catch (err) {
           alert("Error Loading User's Kanji Sets");
         }
+        finally {
+          setIsLoading(false);
+        }
       }
       getKanjiSets();
     }
-    setIsLoading(false);
   }, [currentUser]);
 
   if (isLoading) return <LoadingSpinner />;
